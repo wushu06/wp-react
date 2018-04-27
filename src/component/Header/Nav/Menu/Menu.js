@@ -34,7 +34,11 @@ class WpMenu extends Component {
 
     }
 
+
+
     render() {
+
+
 
 
         const ROOT = 'http://localhost/silcoates/wp-json/wp/v2/posts/'

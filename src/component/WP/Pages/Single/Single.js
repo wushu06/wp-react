@@ -65,7 +65,6 @@ class Single extends  React.Component {
                 <h2>Single</h2>
 
                 {single_content}
-
             </div>
         )
     }

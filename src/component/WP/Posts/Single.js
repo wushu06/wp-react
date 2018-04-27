@@ -61,8 +61,8 @@ class Single extends Component {
                 <h2>Single Posts</h2>
                 <h4 id={this.state.title+this.state.id}>{this.state.title}</h4>
                 <img src={this.state.image} alt=""/>
-                <p> {m} </p>
 
+                <div dangerouslySetInnerHTML={{__html: m}} />
 
             </div>
         )
