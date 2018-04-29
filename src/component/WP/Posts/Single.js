@@ -13,9 +13,10 @@ class Single extends Component {
 
         }
     }
-    componentDidMount() {
+    getPostHandler() {
         const url      = window.location.href;
-        const getID = window.location.search.slice(1);
+       // const getID = window.location.search.slice(1);
+        const getID = this.props.match.params.id;
 
 
         let dataURL = "http://localhost/silcoates/wp-json/wp/v2/posts/"+getID+"?_embed";
@@ -30,7 +31,6 @@ class Single extends Component {
                     content: res.content.rendered,
                     image: img
                 })
-              console.log(res);
 
             })
 
@@ -59,6 +59,7 @@ class Single extends Component {
         return (
             <div>
                 <h2>Single Posts</h2>
+                {this.getPostHandler()}
                 <h4 id={this.state.title+this.state.id}>{this.state.title}</h4>
                 <img src={this.state.image} alt=""/>
 

@@ -4,7 +4,7 @@ import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import Divider from 'material-ui/Divider';
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
-import {Link} from 'react-router-dom'
+import {NavLink} from 'react-router-dom'
 
 
 const style = {
@@ -29,7 +29,7 @@ class WpMenu extends Component {
                 this.setState({
                     menus: res.items
                 })
-                //console.log(res);
+             //   console.log(res);
             })
 
     }
@@ -41,7 +41,6 @@ class WpMenu extends Component {
 
 
 
-        const ROOT = 'http://localhost/silcoates/wp-json/wp/v2/posts/'
         const stateMenu = this.state.menus
 
         const menu = Object.keys( stateMenu ).map( igKey => {
@@ -59,21 +58,27 @@ class WpMenu extends Component {
 
             }
             let item = stateMenu[igKey]
-            let link_page = '/page-single?'+item.object_id
-            let link_post = '/post-single?'+item.id
-            // console.log(children)
+            let NavLink_page = '/post-single/'
+            if(item.object === 'post') {
+                NavLink_page = '/post-single/'+item.object_id
+
+            }else {
+                 NavLink_page = '/page-single/'+item.object_id
+
+            }
+            //console.log(children)
             let menuContent
             if(childItem === '') {
                 menuContent =
-                    <Link
-                        to={link_page}
+                    <NavLink
+                        to={NavLink_page}
                     >
                     <MenuItem  primaryText={item.title} insetChildren={true} />
-                    </Link>
+                    </NavLink>
             }else {
                 menuContent =
-                    <Link
-                        to={link_page}
+                    <NavLink
+                        to={NavLink_page}
                     >
                     <MenuItem
                         primaryText={item.title}
@@ -81,19 +86,15 @@ class WpMenu extends Component {
                         rightIcon={<ArrowDropRight />}
                         menuItems={childItem}
                     />
-                    </Link>
+                    </NavLink>
 
             }
 
             return (
                 <div className="dropdown" key={igKey}>
-
-                            <Menu desktop={true} >
-                                {menuContent}
-
-                            </Menu>
-
-
+                    <Menu desktop={true} >
+                        {menuContent}
+                    </Menu>
                 </div>
 
             )
@@ -102,7 +103,6 @@ class WpMenu extends Component {
         return (
             <div>
                 {menu}
-
             </div>
 
 

@@ -45,7 +45,6 @@ class Header extends Component
 
             this.setState({text: 'open'})
         }
-        console.log(this.state.open);
     }
 
     toggleText = () => {

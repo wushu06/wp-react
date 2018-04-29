@@ -21,8 +21,8 @@ class App extends Component {
         <Route path="/profile" component={Profile}/>
         <Route path="/posts" component={Posts}/>
         <Route path="/pages" component={Pages}/>
-        <Route path="/page-single" component={PageSingle}/>
-        <Route path="/post" component={PostSingle}/>
+        <Route path="/page-single/:id" component={PageSingle}/>
+        <Route path="/post-single/:id" component={PostSingle}/>
       </div>
     );
   }
