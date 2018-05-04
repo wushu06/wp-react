@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom'
 import Spinner from '../../Layout/Spinner';
-
+import { SITE_ROOT } from '../../Inc/Inc'
 class Pages extends Component {
     constructor() {
         super();
@@ -13,8 +13,8 @@ class Pages extends Component {
         }
     }
 
-    componentDidMount() {
-        let dataURL = "http://localhost/silcoates/wp-json/wp/v2/pages?_embed";
+    loadPagesHandler() {
+        let dataURL = SITE_ROOT+"/wp-json/wp/v2/pages?_embed";
         fetch(dataURL)
             .then(res => res.json())
             .then(res => {
@@ -25,9 +25,10 @@ class Pages extends Component {
 
                 })
 
-
+             console.log(res)
+             
             })
-
+          
 
     }
 
@@ -46,7 +47,7 @@ class Pages extends Component {
 
                 return (
                     <div>
-                        <Link to={'/page-single?'+page.id}> <h2>{page.title.rendered}</h2></Link>
+                        <Link to={'/page-single/'+page.slug}> <h2>{page.title.rendered}</h2></Link>
                     </div>
                 )
             })
@@ -55,7 +56,7 @@ class Pages extends Component {
         return (
             <div>
                 <h2>Pages</h2>
-
+                {this.loadPagesHandler()}
                 {pages}
 
 

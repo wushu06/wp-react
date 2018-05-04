@@ -5,6 +5,7 @@ import MenuItem from 'material-ui/MenuItem';
 import Divider from 'material-ui/Divider';
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 import {NavLink} from 'react-router-dom'
+import { SITE_ROOT } from '../../../Inc/Inc'
 
 
 const style = {
@@ -21,7 +22,8 @@ class WpMenu extends Component {
         }
     }
     componentDidMount() {
-        let menuURL = "http://localhost/silcoates/wp-json/wp-api-menus/v2/menus/2/";
+       
+        let menuURL = SITE_ROOT +"/wp-json/wp-api-menus/v2/menus/2/";
 
         fetch(menuURL)
             .then(res => res.json())
@@ -50,9 +52,13 @@ class WpMenu extends Component {
             let childItem  = ''
             if(children ){
                 childItem = Object.keys( children ).map( child => {
-                   // console.log(children[child])
+                    //console.log(children[child])
                     return (
+                        <NavLink
+                            to={'/page-single/'+children[child].object_slug}
+                        >
                         <MenuItem  primaryText={children[child].title} />
+                        </NavLink>
                     )
                 } );
 
@@ -60,10 +66,10 @@ class WpMenu extends Component {
             let item = stateMenu[igKey]
             let NavLink_page = '/post-single/'
             if(item.object === 'post') {
-                NavLink_page = '/post-single/'+item.object_id
+                NavLink_page = '/post-single/'+item.object_slug
 
             }else {
-                 NavLink_page = '/page-single/'+item.object_id
+                 NavLink_page = '/page-single/'+item.object_slug
 
             }
             //console.log(children)
@@ -82,7 +88,6 @@ class WpMenu extends Component {
                     >
                     <MenuItem
                         primaryText={item.title}
-
                         rightIcon={<ArrowDropRight />}
                         menuItems={childItem}
                     />

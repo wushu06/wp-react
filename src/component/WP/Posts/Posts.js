@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import MenuItem from '../../Header/Nav/Menu/Menu'
 import {Link} from 'react-router-dom'
-
+import { SITE_ROOT } from '../../Inc/Inc'
 
 class Posts extends Component {
     constructor() {
@@ -12,7 +12,7 @@ class Posts extends Component {
         }
     }
     componentDidMount() {
-        let dataURL = "http://localhost/silcoates/wp-json/wp/v2/posts?_embed";
+        let dataURL = SITE_ROOT+"/wp-json/wp/v2/posts?_embed";
         fetch(dataURL)
             .then(res => res.json())
             .then(res => {
@@ -31,7 +31,7 @@ class Posts extends Component {
             return <div key={index}>
 
                 <p><strong>Title:</strong> {post.title.rendered}</p>
-                <Link to={'/post?'+post.id}>find out more</Link>
+                <Link to={'/post-single/'+post.slug}>find out more</Link>
                 <img src={post._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url} alt="" width="200"/>
 
             </div>

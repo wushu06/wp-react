@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom'
-
+import { SITE_ROOT } from '../../Inc/Inc'
 class Single extends Component {
     constructor() {
         super();
@@ -13,31 +13,29 @@ class Single extends Component {
 
         }
     }
-    getPostHandler() {
+    componentDidMount() {
         const url      = window.location.href;
        // const getID = window.location.search.slice(1);
         const getID = this.props.match.params.id;
 
 
-        let dataURL = "http://localhost/silcoates/wp-json/wp/v2/posts/"+getID+"?_embed";
+        let dataURL = SITE_ROOT+"/wp-json/wp/v2/posts?slug="+getID;
         fetch(dataURL)
             .then(res => res.json())
             .then(res => {
-                let img = res._embedded['wp:featuredmedia'] ? res._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url : 'http://via.placeholder.com/350x150';
                 this.setState({
                     posts: res,
-                    id: res.id,
-                    title: res.title.rendered,
-                    content: res.content.rendered,
-                    image: img
+                    id: res[0].id,
+                    title: res[0].title.rendered,
+                    content: res[0].content.rendered,                   
                 })
-
+                
             })
 
 
     }
     c  (){
-        console.log(this.state.content  )
+       
         return(
             <div>
                 {   this.state.content        }
@@ -59,7 +57,6 @@ class Single extends Component {
         return (
             <div>
                 <h2>Single Posts</h2>
-                {this.getPostHandler()}
                 <h4 id={this.state.title+this.state.id}>{this.state.title}</h4>
                 <img src={this.state.image} alt=""/>
 

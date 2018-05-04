@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom'
 import Spinner from '../../../Layout/Spinner';
 import Lightbox from 'react-images';
-
+import { SITE_ROOT } from '../../../Inc/Inc'
+import FullWidth from '../../Blocks/FullWidth'
 
 
 class Single extends  React.Component {
@@ -10,6 +11,7 @@ class Single extends  React.Component {
         super();
         this.state = {
             single: [],
+            slug:'',
             id:'',
             title: '',
             content: '',
@@ -26,20 +28,22 @@ class Single extends  React.Component {
         const getID = this.props.match.params.id;
 
 
-        let dataURL = "http://localhost/silcoates/wp-json/wp/v2/pages/"+getID+"?_embed";
+        let dataURL = SITE_ROOT+"/wp-json/wp/v2/pages?slug="+getID+"&_embed";
         fetch(dataURL)
             .then(res => res.json())
             .then(res => {
-                let img = res._embedded['wp:featuredmedia'] ? res._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url : 'http://via.placeholder.com/350x150';
+             
+                let img = res[0]._embedded['wp:featuredmedia'] ? res[0]._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url : 'http://via.placeholder.com/350x150';
+
                 this.setState({
                     single: res,
-                    id: res.id,
-                    title: res.title.rendered === '' ?  res.acf.blocks[0].title : res.title.rendered,
-                    content: res.content.rendered === '' ? res.acf.blocks[0].content:  res.content.rendered,
+                    id: res[0].id,
+                    slug:   getID,
+                    title: res[0].title.rendered === '' ?  res[0].acf.blocks[0].title : res[0].title.rendered,
+                    content: res[0].content.rendered === '' ? res[0].acf.blocks[0].content:  res[0].content.rendered,
                     image: img,
                     loading: false
                 })
-
 
             })
 
@@ -51,12 +55,17 @@ class Single extends  React.Component {
         if(this.state.loading){
             single_content = <Spinner/>
         }else {
+           if(this.state.slug === 'holiday-club') {
+            single_content = <FullWidth data={this.state}/>
+           }else {
             single_content =
-                <div>
-                    <h2>{this.state.title} {this.state.id}</h2>
-                    <img src={this.state.image} alt=""/> <br/>
-                    <div dangerouslySetInnerHTML={{__html: this.state.content}} />
-                </div>
+            <div>
+                <h2>{this.state.title} {this.state.id}</h2>
+                <img src={this.state.image} alt=""/> <br/>
+                <div dangerouslySetInnerHTML={{__html: this.state.content}} />
+            </div>
+           }
+           
         }
 
 
@@ -65,6 +74,7 @@ class Single extends  React.Component {
                 <h2>Single{this.props.match.params.id}</h2>
                 {this.SOMEFUN()}
                 {single_content}
+                
 
             </div>
         )

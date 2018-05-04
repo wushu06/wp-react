@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import Spinner from '../../../Layout/Spinner';
 import Lightbox from 'react-images';
 import $ from 'jquery'
-
+import { SITE_ROOT } from '../../../Inc/Inc'
 
 
 class Single extends  React.Component {
@@ -27,15 +27,13 @@ class Single extends  React.Component {
         const getID = this.props.match.params.id;
         console.log(getID)
 
-        let dataURL = "http://localhost/silcoates/wp-json/wp/v2/pages/"+getID+"?_embed";
+        let dataURL = SITE_ROOT+"/wp-json/wp/v2/pages/"+getID+"?_embed";
         //let dataURL = "http://localhost/silcoates/wp-json/acf/v3/posts/36?_embed";
         fetch(dataURL)
             .then(res => res.json())
             .then(res => {
                 // let img = res._embedded['wp:featuredmedia'] ? res._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url : 'http://via.placeholder.com/350x150';
                 this.setState({
-
-
                     title: res.acf.blocks[0].title,
                     content: res.acf.blocks[0].content,
                     loading: false

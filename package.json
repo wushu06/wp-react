@@ -40,6 +40,7 @@
     "react-dev-utils": "^5.0.0",
     "react-dom": "^16.3.0",
     "react-fancybox": "^0.2.1",
+    "react-geocode": "0.0.7",
     "react-image-lightbox": "^4.6.0",
     "react-images": "^0.5.17",
     "react-lightbox-component": "^0.2.0",
