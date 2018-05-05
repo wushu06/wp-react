@@ -36,7 +36,7 @@ class Single extends  React.Component {
                 let img = res[0]._embedded['wp:featuredmedia'] ? res[0]._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url : 'http://via.placeholder.com/350x150';
 
                 this.setState({
-                    single: res,
+                    single: res[0],
                     id: res[0].id,
                     slug:   getID,
                     title: res[0].title.rendered === '' ?  res[0].acf.blocks[0].title : res[0].title.rendered,
@@ -55,7 +55,7 @@ class Single extends  React.Component {
         if(this.state.loading){
             single_content = <Spinner/>
         }else {
-           if(this.state.slug === 'holiday-club') {
+           if(this.state.slug === 'contact') {
             single_content = <FullWidth data={this.state}/>
            }else {
             single_content =
