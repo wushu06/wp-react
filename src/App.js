@@ -8,7 +8,7 @@ import PageSingle from './component/WP/Pages/Single/Single'
 import PostSingle from './component/WP/Posts/Single'
 import Home from './component/Home/Home'
 import Header from './component/Header/Header'
-import './App.css';
+import './assets/App.scss';
 
 
 class App extends Component {

@@ -45,64 +45,79 @@ class WpMenu extends Component {
 
         const menu = Object.keys( stateMenu ).map( igKey => {
             //console.log(stateMenu[igKey])
+            let item = stateMenu[igKey]
+            let NavLink_page = '/post-single/'
+            if(item.object === 'post') {
+                NavLink_page = '/post-single/'+item.object_slug
+
+            }else {
+                NavLink_page = '/page-single/'+item.object_slug
+
+            }
+
             const children = stateMenu[igKey].children
 
             let childItem  = ''
             if(children ){
                 childItem = Object.keys( children ).map( child => {
-                   // console.log(children[child])
+                     //console.log(children[child])
                     return (
-                        <MenuItem  primaryText={children[child].title} />
+                    <li key={children[child].id}>
+                        <NavLink to={NavLink_page}>
+                        {children[child].title}
+                        </NavLink>
+                    </li>
                     )
                 } );
 
             }
-            let item = stateMenu[igKey]
-            let NavLink_page = '/post-single/'
-            if(item.object === 'post') {
-                NavLink_page = '/post-single/'+item.object_id
 
-            }else {
-                 NavLink_page = '/page-single/'+item.object_id
-
-            }
-            //console.log(children)
+            //console.log(item)
             let menuContent
             if(childItem === '') {
                 menuContent =
                     <NavLink
                         to={NavLink_page}
                     >
-                    <MenuItem  primaryText={item.title} insetChildren={true} />
+                        <li >
+                          {item.title}
+                        </li>
                     </NavLink>
+
+
             }else {
                 menuContent =
                     <NavLink
                         to={NavLink_page}
                     >
-                    <MenuItem
-                        primaryText={item.title}
+                        <li className=" dropdown" >
+                                {item.title} <span className="caret"></span>
+                            <ul className="dropdown-menu" role="menu">
+                                {childItem}
+                            </ul>
+                        </li>
 
-                        rightIcon={<ArrowDropRight />}
-                        menuItems={childItem}
-                    />
                     </NavLink>
 
             }
 
-            return (
-                <div className="dropdown" key={igKey}>
-                    <Menu desktop={true} >
-                        {menuContent}
-                    </Menu>
-                </div>
 
+            return (
+
+
+                    <li key={igKey}>
+                        {menuContent}
+
+                    </li>
             )
         } );
 
         return (
-            <div>
+            <div className="nav navbar-nav navbar-right" id="main-menu">
+                <ul className="nav navbar-nav navbar-right" id="menu-primary-menu" >
+
                 {menu}
+                </ul>
             </div>
 
 
