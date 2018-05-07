@@ -41,7 +41,7 @@ class HeroCarousel extends  React.Component {
             return <div  className="block_hero-carousel_images" key={gallery[igKey].image.ID} style={divStyle}>
                             <div className="block_hero-carousel_images_slide" >
                                 <div className="block_hero-carousel_images_slide_title block_small_container">
-                                    <h1  dangerouslySetInnerHTML={{__html: gallery[igKey].text}}>
+                                    <h1   dangerouslySetInnerHTML={{__html: gallery[igKey].text}}>
                                     </h1>
                                     <div className="title-separator hero-separator hideme visible animated addwidth full-visible">
 

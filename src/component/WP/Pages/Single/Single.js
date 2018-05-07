@@ -4,15 +4,22 @@ import Spinner from '../../../Layout/Spinner';
 import Lightbox from 'react-images';
 import { SITE_ROOT } from '../../../Inc/Inc'
 import FullWidth from '../../Blocks/FullWidth'
+import HeroCarousel from '../../Blocks/HeroCarousel'
+import SecondCarousel from '../../Blocks/SecondCarousel'
+import TwoCol from '../../Blocks/TwoCol'
+import axios from 'axios'
 
-
+let spinner
+let single_data
 class Single extends  React.Component {
     constructor() {
         super();
         this.state = {
             single: [],
+            acf: [],
             slug:'',
             id:'',
+            type: '',
             title: '',
             content: '',
             image: '',
@@ -23,60 +30,138 @@ class Single extends  React.Component {
 
     }
 
-    SOMEFUN() {
+
+    componentWillReceiveProps(nextProps)  {
+        this.setState({
+            loading: true
+        })
+
+        this.props = nextProps;
+
+        this.handleData()
+    }
+
+
+    componentDidUpdate (prevProps, prevState) {
+       // console.log(this.state.single.slug)
+       // console.log(prevState.slug)
+
+        if (prevState === this.state.single) {
+
+            return false;
+        }else {
+
+
+
+        }
+        //this.handleData()
+
+
+
+    }
+
+    componentDidMount () {
+        this.handleData()
+
+    }
+    handleData =() => {
+
         const url      = window.location.href;
         const getID = this.props.match.params.id;
 
 
         let dataURL = SITE_ROOT+"/wp-json/wp/v2/pages?slug="+getID+"&_embed";
-        fetch(dataURL)
-            .then(res => res.json())
+        axios.get(dataURL)
             .then(res => {
-             
-                let img = res[0]._embedded['wp:featuredmedia'] ? res[0]._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url : 'http://via.placeholder.com/350x150';
+
+                let img = res.data[0]._embedded['wp:featuredmedia'] ? res.data[0]._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url : 'http://via.placeholder.com/350x150';
 
                 this.setState({
-                    single: res[0],
-                    id: res[0].id,
+                    single: res.data[0],
+                    acf: res.data[0].acf.blocks,
+                    id: res.data[0].id,
+                    type: res.data[0].type,
                     slug:   getID,
-                    title: res[0].title.rendered === '' ?  res[0].acf.blocks[0].title : res[0].title.rendered,
-                    content: res[0].content.rendered === '' ? res[0].acf.blocks[0].content:  res[0].content.rendered,
+                    title: res.data[0].title.rendered === '' ?  res.data[0].acf.blocks[0].title : res.data[0].title.rendered,
+                    content: res.data[0].content.rendered === '' ? res.data[0].acf.blocks[0].content:  res.data[0].content.rendered,
                     image: img,
                     loading: false
                 })
 
-            })
 
+            })
+            .catch(error => {
+            console.log(error)
+        })
 
     }
 
-  render() {
-        let single_content
-        if(this.state.loading){
-            single_content = <Spinner/>
+
+    render() {
+       // console.log(this.state.acf.blocks)
+        const single = this.state.acf
+         single_data = Object.keys( single ).map( igKey => {
+          // console.log(single[igKey])
+            let data
+
+             console.log(single[igKey])
+            switch(single[igKey].acf_fc_layout ) {
+                case 'hero_carousel' :
+                    data = <HeroCarousel gallery={single[igKey].gallery}/>
+
+
+
+
+
+                    break;
+                case 'contact':
+
+                        data =
+                            <div>
+                                <FullWidth page={'contact_us'} data={single[igKey]}/>
+                            </div>
+                         break;
+
+                case 'half_carousel':
+                    //console.log(single[igKey])
+                    data =
+                        <div>
+                            <TwoCol two={single[igKey]} twoC = {single[igKey].content} />
+                        </div>
+
+                    break;
+                    case 'full_width':
+                    //console.log(single[igKey])
+                    data =
+                        data =
+                            <div>
+                                <FullWidth page={'others'} data={single[igKey]}/>
+                            </div>
+
+                    break;
+            }
+            return (
+                <div>
+                    {data}
+                </div>
+
+            )
+
+
+        })
+
+        if(this.state.loading === true) {
+             spinner = <Spinner/>
         }else {
-           if(this.state.slug === 'contact') {
-            single_content = <FullWidth data={this.state}/>
-           }else {
-            single_content =
-            <div>
-                <h2>{this.state.title} {this.state.id}</h2>
-                <img src={this.state.image} alt=""/> <br/>
-                <div dangerouslySetInnerHTML={{__html: this.state.content}} />
-            </div>
-           }
-           
+            spinner = ''
         }
 
-
         return (
-            <div>
-                <h2>Single{this.props.match.params.id}</h2>
-                {this.SOMEFUN()}
-                {single_content}
-                
+            <section className="wrapper animsitionx" id="page">
+                {spinner}
+                {single_data}
 
-            </div>
+            </section>
         )
     }
 }

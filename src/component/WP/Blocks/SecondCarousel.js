@@ -31,7 +31,7 @@ class SecondCarousel extends  React.Component {
 
         let secondCarousel = Object.keys( gallery  ).map( igKey => {
 
-            console.log(gallery[igKey].link)
+            //console.log(gallery[igKey].link)
             //console.log(gallery[igKey].image.ID)
             return (
             <div className="col-md-4 col-sm-6 col-xs-12"  key={gallery[igKey].image.ID}>

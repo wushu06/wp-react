@@ -4,6 +4,7 @@ import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import Divider from 'material-ui/Divider';
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
+import { SITE_ROOT } from '../../../Inc/Inc'
 import {NavLink} from 'react-router-dom'
 
 
@@ -21,7 +22,7 @@ class WpMenu extends Component {
         }
     }
     componentDidMount() {
-        let menuURL = "http://localhost/silcoates/wp-json/wp-api-menus/v2/menus/2/";
+        let menuURL = SITE_ROOT+"/wp-json/wp-api-menus/v2/menus/2/";
 
         fetch(menuURL)
             .then(res => res.json())
@@ -42,7 +43,7 @@ class WpMenu extends Component {
 
 
         const stateMenu = this.state.menus
-
+       // console.log(stateMenu)
         const menu = Object.keys( stateMenu ).map( igKey => {
             //console.log(stateMenu[igKey])
             let item = stateMenu[igKey]

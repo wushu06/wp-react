@@ -13,7 +13,7 @@ class Pages extends Component {
         }
     }
 
-    loadPagesHandler() {
+    componentDidMount() {
         let dataURL = SITE_ROOT+"/wp-json/wp/v2/pages?_embed";
         fetch(dataURL)
             .then(res => res.json())
@@ -25,7 +25,7 @@ class Pages extends Component {
 
                 })
 
-             console.log(res)
+             //console.log(res)
              
             })
           
@@ -55,8 +55,8 @@ class Pages extends Component {
 
         return (
             <div>
-                <h2>Pages</h2>
-                {this.loadPagesHandler()}
+
+
                 {pages}
 
 

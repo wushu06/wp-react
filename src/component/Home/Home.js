@@ -63,9 +63,9 @@ class Home extends Component
         }else {
             home_content =
                 <div>
-                    <h2>{this.state.title}</h2>
-                    <img src={this.state.image} alt=""/> <br/>
-                    <div dangerouslySetInnerHTML={{__html: this.state.content}} />
+                    <HeroCarousel gallery={this.state.gallery} />
+                    <SecondCarousel sec={this.state.secondCarousel} secTitle={this.state.secTitle} />
+                    <WP/>
 
                 </div>
         }
@@ -73,9 +73,7 @@ class Home extends Component
         return(
             <section className="wrapper animsitionx" id="page">
 
-                <HeroCarousel gallery={this.state.gallery} />
-                <SecondCarousel sec={this.state.secondCarousel} secTitle={this.state.secTitle} />
-                <WP/>
+                {home_content}
 
             </section>
         )

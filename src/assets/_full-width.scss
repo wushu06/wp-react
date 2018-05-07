@@ -1,6 +1,9 @@
 &_full-width {
   margin: $margin;
-
+  h1 {
+    visibility: visible;
+    opacity:1;
+  }
   .title-separator {
     margin: -10px 0 30px;
   }

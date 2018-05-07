@@ -55,7 +55,7 @@ class Single extends Component {
 
        let m =  this.state.content
 
-console.log(this.state.posts)
+        //console.log(this.state.posts)
 
         return (
             <div>
