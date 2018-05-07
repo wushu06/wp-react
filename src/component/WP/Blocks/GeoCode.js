@@ -6,8 +6,7 @@ import Spinner from '../../Layout/Spinner';
 import TextField from 'material-ui/TextField';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import RaisedButton from 'material-ui/RaisedButton'
-import GoogleMapReact from 'google-map-react'
-import Marker from 'google-map-react'
+import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 import MarkerSvg from '../../../assets/marker.svg'
 
 
@@ -46,10 +45,10 @@ class GeoCode extends  React.Component {
             api: 'AIzaSyAOp9eWdBHhXmp5nIdi0L3aU7qYRLvHV4g',
             address: '',
             center: {
-                lat: 59.95,
-                lng: 30.33
+                lat: 53.6974444,
+                lng: -1.6339689
             },
-            zoom: 11,
+            zoom: 15,
             loading: false,
         }
 
@@ -110,6 +109,7 @@ class GeoCode extends  React.Component {
             spinner = ''
         }
 
+
         return (
 
             <div className="container">
@@ -149,20 +149,26 @@ class GeoCode extends  React.Component {
                                     {this.state.address}
                                 </div>
                                 <div className="col-xs-12 col-sm-12" style={{ height: '100vh', width: '100%' }}>
-                                    <GoogleMapReact
-                                        bootstrapURLKeys={{ key: this.state.api}}
-                                        center={this.state.center}
-                                        defaultZoom={this.state.zoom}
 
-                                    >
-                                        <AnyReactComponent
-                                            lat={this.state.center.lat}
-                                            lng={this.state.center.lng}
 
-                                            text={'Nour'}
-                                        />
-                                                                               <img src={MarkerSvg} alt="" width="50"/>
-                                    </GoogleMapReact>
+                                    <Map google={this.props.google}
+
+                                         center={{
+                                             lat: this.state.center.lat,
+                                             lng: this.state.center.lng
+                                         }}
+                                         zoom={this.state.zoom}
+                                         onClick={this.onMapClicked}>
+
+                                        <Marker
+                                            title={'The marker`s title will appear as a tooltip.'}
+                                            name={'SOMA'}
+                                            position={{lat: this.state.center.lat,
+                                                lng: this.state.center.lng}} />
+
+                                    </Map>
+
+
                                 </div>
                             </div>
                         </form>
@@ -173,5 +179,7 @@ class GeoCode extends  React.Component {
         )
     }
 }
-export default GeoCode;
+export default GoogleApiWrapper({
+    apiKey: ('AIzaSyAOp9eWdBHhXmp5nIdi0L3aU7qYRLvHV4g')
+})(GeoCode);
 
