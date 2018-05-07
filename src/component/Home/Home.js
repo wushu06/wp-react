@@ -4,9 +4,9 @@ import WP from '../WP/Posts/Posts'
 import Spinner from '../Layout/Spinner';
 import $ from 'jquery'
 import { SITE_ROOT } from '../Inc/Inc'
-import Geocode from "react-geocode";
 import HeroCarousel from '../WP/Blocks/HeroCarousel'
 import SecondCarousel from '../WP/Blocks/SecondCarousel'
+import GeoCode from '../WP/Blocks/GeoCode'
 
 
 
@@ -74,6 +74,7 @@ class Home extends Component
             <section className="wrapper animsitionx" id="page">
 
                 {home_content}
+                <GeoCode />
 
             </section>
         )

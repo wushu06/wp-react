@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import Spinner from '../../Layout/Spinner';
 import Lightbox from 'react-images';
 import $ from 'jquery'
-import { SITE_ROOT, G_FORM } from '../../Inc/Inc'
+import { SITE_ROOT, FORM_GET, FORM_POST  } from '../../Inc/Inc'
 import axios from 'axios';
 import { withStyles } from 'material-ui/styles';
 import TextField from 'material-ui/TextField';
@@ -55,7 +55,7 @@ class Single extends  React.Component {
         //console.log(this.props.page)
         if(this.props.page === 'contact_us') {
             // Make a request for a user with a given ID
-            let URL = 'https://www.checkfire.co.uk/gravityformsapi/forms/3/?api_key=c6be399bda&signature=KJ4zz5WxbCmRtFbEJLtxgtHisAk%3D&expires=1528338907'
+            let URL = FORM_GET
             axios.get(URL)
                 .then(res => {
                     let formsData = res.data.response.fields;
@@ -103,7 +103,7 @@ class Single extends  React.Component {
            'loading': true
        })
 
-        let url = 'https://www.checkfire.co.uk/gravityformsapi/forms/3/?api_key=c6be399bda&signature=IcQ9khn2KIa9nufWaibHmw77wzo%3D&expires=1528338937';
+        let url = FORM_POST
         let input_values= this.state.input_ids
         let values = {input_values }
 
